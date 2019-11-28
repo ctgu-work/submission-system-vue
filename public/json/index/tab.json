@@ -1,0 +1,35 @@
+{
+    "list": [
+        {
+            "name:": "科学",
+            "icon": "",
+            "site": "",
+            "weight": 1
+        },
+        {
+            "name:": "自然",
+            "icon": "",
+            "site": "",
+            "weight": 1
+        },
+        {
+            "name:": "人文",
+            "icon": "",
+            "site": "",
+            "weight": 1
+        },
+        {
+            "name:": "教育",
+            "icon": "",
+            "site": "",
+            "weight": 1
+        },
+        {
+            "name:": "计算机",
+            "icon": "",
+            "site": "",
+            "weight": 1
+        }
+    ],
+    "pageTotal": 5
+}

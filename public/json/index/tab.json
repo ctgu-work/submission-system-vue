@@ -1,35 +1,37 @@
 {
     "list": [
         {
-            "name:": "科学",
-            "icon": "",
+            "text": "科学",
+            "icon": "mdi-contacts",
+            "site": "/science",
+            "weight": 1
+        },
+        {
+            "text": "自然",
+            "icon": "mdi-history",
             "site": "",
             "weight": 1
         },
         {
-            "name:": "自然",
-            "icon": "",
+            "text": "人文",
+            "icon": "mdi-content-copy",
+            "site": "",
+            "weight": 3
+        },
+        {
+            "text": "教育",
+            "icon": "mdi-chevron-up",
             "site": "",
             "weight": 1
         },
         {
-            "name:": "人文",
-            "icon": "",
-            "site": "",
-            "weight": 1
-        },
-        {
-            "name:": "教育",
-            "icon": "",
-            "site": "",
-            "weight": 1
-        },
-        {
-            "name:": "计算机",
-            "icon": "",
+            "text": "计算机",
+            "icon": "mdi-chevron-up",
             "site": "",
             "weight": 1
         }
     ],
     "pageTotal": 5
 }
+
+  

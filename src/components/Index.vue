@@ -3,8 +3,13 @@
     <!-- 侧边栏 -->
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
       <v-list dense>
-        <template v-for="item in items">
-          
+        <template v-for="item in tablist">
+          <!-- 将侧边栏分为三类
+          1. 有heading
+          2. 有children
+          3. 其他
+          -->
+          <!-- 有heading -->
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <v-col cols="6">
               <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
@@ -14,6 +19,7 @@
             </v-col>
           </v-row>
 
+          <!-- 有children -->
           <v-list-group
             v-else-if="item.children"
             :key="item.text"
@@ -21,7 +27,6 @@
             :prepend-icon="item.model ? item.icon : item['icon-alt']"
             append-icon
           >
-            <!-- 下拉菜单 -->
             <template v-slot:activator>
               <v-list-item>
                 <v-list-item-content>
@@ -40,6 +45,7 @@
             </v-list-item>
           </v-list-group>
 
+          <!-- 其他 -->
           <v-list-item v-else :key="item.text" link>
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
@@ -81,71 +87,62 @@
     </v-app-bar>
 
     <!-- 主体内容 -->
-    <v-content>
-      <!-- <v-container class="fill-height" fluid> -->
+    <v-content class="grey lighten-2">
       <v-row class="fill-height ma-1" fluid>
         <v-col align="center" justify="center" xs="12" sm="12" md="9" lg="9">
-          <v-card class="mx-auto pa-2 ma-1 fill-weight" color="#26c6da" dark max-height="250px">
-            <v-card-title class="pa-0">
-              <v-avatar class="mr-1" color="red" size="37">
-                <span class="white--text headline">热</span>
-              </v-avatar>
-              <!-- <v-icon large left>mdi-twitter</v-icon> -->
-              <span class="title">量子计算机的推广</span>
-            </v-card-title>
-
-            <!--  class="headline font-weight-bold" -->
-            <v-card-text>
-              <v-row>
-                <v-col cols="3">
-                  <v-avatar class="mr-1" color="red" size="50">
-                    <span class="white--text headline">头像</span>
-                  </v-avatar>
-                </v-col>
-                <v-col cols="9">
-                  <span
-                    class="d-inline-block text-truncate body-1"
-                    style="max-width: 650px;"
-                  >在之前推广出kunges操作系统以后，我将目光进一步放入了量子力学的研究，渴望将计算机应用做进一步的推广。</span>
-                </v-col>
-              </v-row>
-            </v-card-text>
-
-            <v-card-actions class="pa-0">
-              <v-row cols="12" fluid>
-                <v-col cols="3" class="d-flex flex-row pt-0 pd-0">
-                  <v-avatar class="body-2" size="30">
-                    <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-                  </v-avatar>
-                  <strong class="ml-1">昆哥</strong>
-                </v-col>
-                <v-col class="d-flex flex-row-reverse" cols="9">
-                  <v-icon class="mr-1">mdi-heart</v-icon>
-                  <span class="subheading mr-2">256</span>
-                  <span class="mr-2"></span>
-                  <v-icon class="mr-1">mdi-share-variant</v-icon>
-                  <span class="subheading">45</span>
-                </v-col>
-              </v-row>
-            </v-card-actions>
-          </v-card>
+          <!-- 中间内容 -->
+          <router-view></router-view>
         </v-col>
-        <v-col class="mr-0.1 d-none d-md-flex" md="3" lg="3">
-          <v-card class="mx-auto" max-width="344" outlined>
-            <v-list-item three-line>
+
+        <!-- 右侧 -->
+        <v-col class="flex-column mr-0.1 d-none d-md-flex" md="3" lg="3">
+          <v-card class="mx-auto"  outlined>
+            <v-list-item class="d-flex">
               <v-list-item-content>
                 <div class="overline mb-4"></div>
-                <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-                <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+                <v-list-item-title class="headline mb-1">最热话题</v-list-item-title>
+                <div class="d-flex flex-wrap">
+                  <!-- 标签 -->
+                  <template v-for="i in tags">
+                    <v-avatar :key="i" class="ma-1 d-block" color size="auto" tile>
+                      <span
+                        class
+                        style="padding: 2px 10px;font-size:14px;border:1px solid #BDBDBD;border-radius:12px"
+                      >{{i}}</span>
+                    </v-avatar>
+                  </template>
+                </div>
+                <!-- <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle> -->
               </v-list-item-content>
 
-              <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+              <!-- <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar> -->
+            </v-list-item>
+            <!-- 大于10个不显示 -->
+            <v-card-actions v-if="tags.length>10">
+              <v-btn text>查看更多</v-btn>
+              <!-- <v-btn text>Button</v-btn> -->
+            </v-card-actions>
+          </v-card>
+
+          <v-card  class="mx-auto mt-3" width="100%" outlined>
+            <v-list-item class="d-flex">
+              <v-list-item-content>
+                <div class="overline mb-4"></div>
+                <v-list-item-title class="headline mb-1">最热文章</v-list-item-title>
+                <!-- <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle> -->
+                <v-container>
+                  <span>123</span>
+                  <span>123</span>
+                </v-container>
+              </v-list-item-content>
+
+              <!-- <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar> -->
             </v-list-item>
 
-            <v-card-actions>
+            <!-- <v-card-actions>
               <v-btn text>Button</v-btn>
               <v-btn text>Button</v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
           </v-card>
         </v-col>
       </v-row>
@@ -197,6 +194,8 @@
 </template>
 
 <script>
+import { fetchTab } from "@/api/index";
+// import { sortByKey } from "@/utils/util";
 export default {
   props: {
     source: String
@@ -204,36 +203,49 @@ export default {
   data: () => ({
     dialog: false,
     drawer: null,
-    items: [
-      { icon: "mdi-contacts", text: "Contacts" },
-      { icon: "mdi-history", text: "Frequently contacted" },
-      { icon: "mdi-content-copy", text: "Duplicates" },
-      {
-        icon: "mdi-chevron-up",
-        "icon-alt": "mdi-chevron-down",
-        text: "Labels",
-        model: true,
-        children: [{ icon: "mdi-plus", text: "Create label" }]
-      },
-      {
-        icon: "mdi-chevron-up",
-        "icon-alt": "mdi-chevron-down",
-        text: "More",
-        model: false,
-        children: [
-          { text: "Import" },
-          { text: "Export" },
-          { text: "Print" },
-          { text: "Undo changes" },
-          { text: "Other contacts" }
-        ]
-      },
-      { icon: "mdi-settings", text: "Settings" },
-      { icon: "mdi-message", text: "Send feedback" },
-      { icon: "mdi-help-circle", text: "Help" },
-      { icon: "mdi-cellphone-link", text: "App downloads" },
-      { icon: "mdi-keyboard", text: "Go to the old version" }
+    tablist: [],
+    tags: [
+      "测试",
+      "JavaWeb",
+      "Rabbit MQ",
+      "爬虫",
+      "Nginx",
+      "MySql",
+      "Git",
+      "生活",
+      "体育",
+      "幼儿教育",
+      "量子力学"
     ]
-  })
+  }),
+  created() {
+    this.getTab();
+  },
+  methods: {
+    getTab() {
+      fetchTab(this.list).then(res => {
+        console.log(res);
+        this.tablist = res.list;
+      });
+    }
+  },
+  watch: {
+    tablist: {
+      handler(val, oldVal) {
+        console.log("b.tablist: " + val + "---" + oldVal); //但是这两个值打印出来却都是一样的
+        console.log(this.$route.path);
+        if (this.$route.path == "/") {
+          console.log(
+            "加载第一个组件，请求地址应该是: " + this.tablist[0].site
+          );
+          this.$router.replace("/article");
+        }
+      },
+      deep: true
+    }
+  }
 };
 </script>
+
+<style>
+</style>

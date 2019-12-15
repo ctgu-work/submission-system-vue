@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Index from '../components/Index.vue'
+import Profile from '../components/Profile.vue'
 import Computer from '../components/item/Computer.vue'
 import ArticleList from '../components/item/ArticleList.vue'
+import Activities from '../components/profile/Activities.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,16 @@ const routes = [
     ]
     // redirect: '/index'
   },
+  {
+    path:'/profile',
+    component:Profile,
+    children:[
+      {
+        path:'activities',
+        component:Activities
+      }
+    ]
+  }
   // {
   //   path: '/',
   //   // component: Computer,

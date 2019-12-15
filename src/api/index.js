@@ -15,3 +15,12 @@ export function fetchArticleList(list) {
         params: list
     })
 }
+
+//请求右侧最热文章栏
+export function fetchHotArticleList(list){
+    return request({
+        url: './json/index/rank.json',
+        method: 'get',
+        params: list
+    })
+}

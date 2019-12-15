@@ -96,7 +96,7 @@
 
         <!-- 右侧 -->
         <v-col class="flex-column mr-0.1 d-none d-md-flex" md="3" lg="3">
-          <v-card class="mx-auto"  outlined>
+          <v-card class="mx-auto" outlined>
             <v-list-item class="d-flex">
               <v-list-item-content>
                 <div class="overline mb-4"></div>
@@ -124,16 +124,25 @@
             </v-card-actions>
           </v-card>
 
-          <v-card  class="mx-auto mt-3" width="100%" outlined>
+          <v-card class="mx-auto mt-3" width="100%" outlined>
             <v-list-item class="d-flex">
               <v-list-item-content>
                 <div class="overline mb-4"></div>
                 <v-list-item-title class="headline mb-1">最热文章</v-list-item-title>
                 <!-- <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle> -->
-                <v-container>
-                  <span>123</span>
-                  <span>123</span>
-                </v-container>
+                <template v-for="item in this.hotArticleList">
+                  <v-container :key="item.id" class="flex-column pl-0 pr-0" style="border-top: 1px solid #e0e0e0;">
+                    <span class="d-block">{{item.title}}</span>
+                    <div style="font-size:11px" class="mt-3 d-flex d-block flex-wrap">
+                      <span style="line-height:20px">发表于 {{item.date}}</span>
+
+                      <div class="ml-auto">
+                        <v-icon class="mr-1">mdi-heart</v-icon>
+                        <span class="d-inline-block subheading mr-2 ml-auto">{{item.like}}</span>
+                      </div>
+                    </div>
+                  </v-container>
+                </template>
               </v-list-item-content>
 
               <!-- <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar> -->
@@ -142,7 +151,7 @@
             <!-- <v-card-actions>
               <v-btn text>Button</v-btn>
               <v-btn text>Button</v-btn>
-            </v-card-actions> -->
+            </v-card-actions>-->
           </v-card>
         </v-col>
       </v-row>
@@ -195,6 +204,7 @@
 
 <script>
 import { fetchTab } from "@/api/index";
+import { fetchHotArticleList } from "@/api/index";
 // import { sortByKey } from "@/utils/util";
 export default {
   props: {
@@ -216,16 +226,25 @@ export default {
       "体育",
       "幼儿教育",
       "量子力学"
-    ]
+    ],
+    hotArticleList: []
   }),
   created() {
     this.getTab();
+    this.getHotArticleList();
   },
   methods: {
     getTab() {
       fetchTab(this.list).then(res => {
         console.log(res);
         this.tablist = res.list;
+      });
+    },
+
+    getHotArticleList() {
+      fetchHotArticleList(this.hotArticleList).then(res => {
+        console.log("获取最热文章列表");
+        this.hotArticleList = res.list;
       });
     }
   },

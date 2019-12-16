@@ -16,23 +16,28 @@
                 <div class="headline font-weight-black">Chase</div>
                 <div class="font-weight-light">Number 10</div>
               </v-card-text>
-              <v-btn width="210" style="margin:0 auto;" class="d-flex" flat>编辑主页</v-btn>
+              <v-btn @click="editInfo" width="210" style="margin:0 auto;" class="d-flex" flat>编辑主页</v-btn>
               <v-card-subtitle class="pt-2">那些路上的脚印永远不会被隐藏</v-card-subtitle>
               <v-container class="d-flex align-start flex-column">
-                <div>📫: imsunchao@gmail.com</div>
-                <div>地址：湖北宜昌</div>
+                <div>📫:&nbsp;imsunchao@gmail.com</div>
+                <div>💒:&nbsp;湖北宜昌</div>
               </v-container>
             </v-card>
           </v-col>
-          <v-col md="9">
-            <v-tabs>
-              <v-tab>文章</v-tab>
-              <v-tab>个人信息</v-tab>
-              <v-tab>稿件状态</v-tab>
-              <v-tab>收益</v-tab>
-              <!-- <v-tab></v-tab> -->
+          <v-col style="background-color:white;" md="9">
+            <router-view></router-view>
+            <!-- <v-tabs >
+              <v-tab>
+                <router-link :to="{path:'/profile/activities/'}">首页</router-link>
+              </v-tab>
+              <v-tab>
+                <router-link :to="{path:'/profile/activities/state'}">稿件状态</router-link>
+              </v-tab>
+              <v-tab>
+                <router-link :to="{path:'/profile/activities/info'}">收益</router-link>
+              </v-tab>
             </v-tabs>
-            <v-container></v-container>
+            <router-view />-->
           </v-col>
         </v-row>
       </v-col>
@@ -40,3 +45,18 @@
     </v-row>
   </v-app>
 </template>
+<script>
+export default {
+  methods: {
+    editInfo() {
+      this.$router.replace("/profile/activities/editinfo");
+    }
+  }
+};
+</script>
+<style>
+a {
+  color: rgba(0, 0, 0, 0.54);
+  text-decoration: none;
+}
+</style>

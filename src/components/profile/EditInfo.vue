@@ -1,0 +1,11 @@
+<template>
+    <v-app>
+        <v-container>
+            <v-list>
+                <v-list-item>
+                    123
+                </v-list-item>
+            </v-list>
+        </v-container>
+    </v-app>
+</template>

@@ -4,7 +4,12 @@ import Index from '../components/Index.vue'
 import Profile from '../components/Profile.vue'
 import Computer from '../components/item/Computer.vue'
 import ArticleList from '../components/item/ArticleList.vue'
+
 import Activities from '../components/profile/Activities.vue'
+import ActivitiesContext from '../components/profile/ActivitiesContext.vue'
+import Info from '../components/profile/Info.vue'
+import State from '../components/profile/State.vue'
+import EditInfo from '../components/profile/EditInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -14,32 +19,44 @@ const routes = [
     component: Index,
     children: [
       {
-        path:'/article',
+        path: '/article',
         component: ArticleList
       }
     ]
-    // redirect: '/index'
   },
   {
-    path:'/profile',
-    component:Profile,
-    children:[
+    path: '/profile',
+    component: Profile,
+    redirect: 'profile/activities',
+    children: [
       {
-        path:'activities',
-        component:Activities
-      }
+        path: 'activities',
+        component: Activities,
+        // redirect: 'activities/info',
+        redirect: 'activities/context',
+        children: [
+          {
+            path: 'context',
+            component: ActivitiesContext,
+            redirect: 'context/info',
+            children: [
+              {
+                path: 'info',
+                component: Info
+              }, {
+                path: 'state',
+                component: State
+              }
+            ]
+          }, {
+            path: 'editinfo',
+            component: EditInfo
+          }
+        ]
+
+      },
     ]
   }
-  // {
-  //   path: '/',
-  //   // component: Computer,
-  //   children: [
-  //     {
-  //       path: '/index',
-  //       // component: Computer
-  //     }
-  //   ]
-  // }
 ]
 
 const router = new VueRouter({

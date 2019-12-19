@@ -2,7 +2,7 @@
   <v-app>
     <!-- 导航栏 -->
     <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click="toIndex"  @click.stop="drawer = !drawer" />
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">在线投稿系统</span>
       </v-toolbar-title>
@@ -39,3 +39,15 @@
     </v-content>
   </v-app>
 </template>
+<script>
+export default {
+  data:()=>({
+    drawer:false
+  }),
+  methods:{
+    toIndex(){
+      this.$router.push('/')
+    }
+  }
+}
+</script>

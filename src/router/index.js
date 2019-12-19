@@ -5,6 +5,7 @@ import Index from '../components/Index.vue'
 import Profile from '../components/Profile.vue'
 // components/item/
 import ArticleList from '../components/item/ArticleList.vue'
+import Article from '../components/item/Article.vue'
 //components/profile/
 import Activities from '../components/profile/Activities.vue'
 import ActivitiesContext from '../components/profile/ActivitiesContext.vue'
@@ -25,8 +26,12 @@ const routes = [
     component: Index,
     children: [
       {
-        path: '/article',
+        path: '/articlelist',
         component: ArticleList
+      },
+      {
+        path:'/article',
+        component:Article
       }
     ]
   },

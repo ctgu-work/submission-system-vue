@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <!-- 专家认证 -->
-    <!-- <v-container> -->
     <v-row class="d-flex justify-center">
       <v-col md="10">
         <!--  -->
@@ -23,7 +22,6 @@
             </v-stepper-step>
           </v-stepper-header>
         </v-stepper>
-        <!-- <v-container class="d-flex justify-center"> -->
         <v-container class="">
           <v-row class="justify-center">
             <v-col md="9" class="test pa-12">
@@ -35,7 +33,6 @@
       </v-col>
     </v-row>
 
-    <!-- </v-container> -->
   </v-app>
 </template>
 <script>

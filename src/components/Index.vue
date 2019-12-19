@@ -257,7 +257,7 @@ export default {
           console.log(
             "加载第一个组件，请求地址应该是: " + this.tablist[0].site
           );
-          this.$router.replace("/article");
+          this.$router.replace("/articlelist");
         }
       },
       deep: true

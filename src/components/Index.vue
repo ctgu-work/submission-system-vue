@@ -59,33 +59,7 @@
     </v-navigation-drawer>
 
     <!-- 导航栏 -->
-    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
-        <span class="hidden-sm-and-down">在线投稿系统</span>
-      </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        label="Search"
-        class="hidden-sm-and-down"
-      />
-      <v-spacer />
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
-      <v-btn icon large>
-        <v-avatar size="32px" item>
-          <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
-        </v-avatar>
-      </v-btn>
-    </v-app-bar>
-
+    <Nav/>
     <!-- 主体内容 -->
     <v-content class="grey lighten-2">
       <v-row class="fill-height ma-1" fluid>
@@ -131,7 +105,11 @@
                 <v-list-item-title class="headline mb-1">最热文章</v-list-item-title>
                 <!-- <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle> -->
                 <template v-for="item in this.hotArticleList">
-                  <v-container :key="item.id" class="flex-column pl-0 pr-0" style="border-top: 1px solid #e0e0e0;">
+                  <v-container
+                    :key="item.id"
+                    class="flex-column pl-0 pr-0"
+                    style="border-top: 1px solid #e0e0e0;"
+                  >
                     <span class="d-block">{{item.title}}</span>
                     <div style="font-size:11px" class="mt-3 d-flex d-block flex-wrap">
                       <span style="line-height:20px">发表于 {{item.date}}</span>
@@ -203,16 +181,22 @@
 </template>
 
 <script>
+//引入方法
 import { fetchTab } from "@/api/index";
 import { fetchHotArticleList } from "@/api/index";
-// import { sortByKey } from "@/utils/util";
+
+//引入组件
+import Nav from "@/components/index/Nav";
 export default {
+  components: {
+    Nav
+  },
   props: {
     source: String
   },
   data: () => ({
     dialog: false,
-    drawer: null,
+    // drawer: null,
     tablist: [],
     tags: [
       "测试",
@@ -229,6 +213,16 @@ export default {
     ],
     hotArticleList: []
   }),
+  computed: {
+    drawer: {
+      get() {
+        return this.$store.state.drawer;
+      },
+      set(value) {
+        this.$store.commit("updateDrawer", value);
+      }
+    }
+  },
   created() {
     this.getTab();
     this.getHotArticleList();

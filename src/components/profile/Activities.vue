@@ -26,18 +26,6 @@
           </v-col>
           <v-col style="background-color:white;" md="9">
             <router-view></router-view>
-            <!-- <v-tabs >
-              <v-tab>
-                <router-link :to="{path:'/profile/activities/'}">首页</router-link>
-              </v-tab>
-              <v-tab>
-                <router-link :to="{path:'/profile/activities/state'}">稿件状态</router-link>
-              </v-tab>
-              <v-tab>
-                <router-link :to="{path:'/profile/activities/info'}">收益</router-link>
-              </v-tab>
-            </v-tabs>
-            <router-view />-->
           </v-col>
         </v-row>
       </v-col>

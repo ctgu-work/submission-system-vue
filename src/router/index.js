@@ -17,50 +17,55 @@ import Authen from '../components/profile/Authen.vue'
 import AuthenName from '../components/profile/AuthenName.vue'
 import AuthenIdentify from '../components/profile/AuthenIdentify.vue'
 import Authening from '../components/profile/Authening.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    component: Index,
+    component: Index,//主页
+    redirect: 'articlelist',
     children: [
       {
         path: '/articlelist',
-        component: ArticleList
+        component: ArticleList//主页文章列表组件
       },
       {
-        path:'/article',
-        component:Article
+        path: '/article',
+        component: Article//详细文章
       }
     ]
   },
   {
     path: '/profile',
-    component: Profile,
+    component: Profile,//个人主页
     redirect: 'profile/activities',
     children: [
       {
         path: 'activities',
-        component: Activities,
+        component: Activities,//主页
         redirect: 'activities/context',
         children: [
           {
             path: 'context',
-            component: ActivitiesContext,
+            component: ActivitiesContext,//个人主页的分页栏
             redirect: 'context/info',
             children: [
               {
                 path: 'info',
-                component: Info
+                component: Info//个人主页
               }, {
                 path: 'state',
-                component: State
+                component: State//稿件状态
               }
             ]
           }, {
             path: 'editinfo',
-            component: EditInfo
+            component: EditInfo, //编辑信息
+            meta: {
+              requiresAuth: true
+            }
           }
         ]
 
@@ -92,8 +97,25 @@ const routes = [
   }
 ]
 
+
+
 const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  let token = window.localStorage.getItem('token')
+
+  if (to.meta.requiresAuth) {//判断是否需要权限
+    if (token != null) {
+      console.log('token: ' + token)
+    } else {
+      console.log('需要权限，你没有token')
+    }
+  } else {
+    console.log('不要权限')
+  }
+  next()
+
+})
 export default router

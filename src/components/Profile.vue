@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <!-- 导航栏 -->
-    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
+    <Nav/>
+    <!-- <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
       <v-app-bar-nav-icon @click="toIndex"  @click.stop="drawer = !drawer" />
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">在线投稿系统</span>
@@ -26,7 +27,7 @@
           <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
         </v-avatar>
       </v-btn>
-    </v-app-bar>
+    </v-app-bar> -->
     <!-- 中间内容 -->
     <v-content class="white">
       <v-row class="fill-height ma-1" fluid>
@@ -40,7 +41,11 @@
   </v-app>
 </template>
 <script>
+import Nav from "@/components/index/Nav";
 export default {
+  components:{
+    Nav
+  },
   data:()=>({
     drawer:false
   }),

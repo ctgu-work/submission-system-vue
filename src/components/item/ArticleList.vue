@@ -58,48 +58,6 @@
           </v-col>
         </v-row>
       </v-container>
-      <!-- <v-card
-        :key="item.id"
-        class="mx-auto pa-2 mb-3 mr-0 ml-0 fill-weight"
-        color="#26c6da"
-        dark
-        max-height="250px"
-      >
-        <v-card-title class="pa-0">
-          <v-avatar v-if="item.status == 1" class="mr-1" color="red" size="37">
-            <span class="white--text headline">热</span>
-          </v-avatar>
-          <span class="title">{{item.title}}</span>
-          <v-avatar v-if="item.weight != 0" color="red" size="30" :tile="tile">
-            <span style="font-size:12px" class="white--text">置顶</span>
-          </v-avatar>
-        </v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" class="pa-0">
-              <span class="d-block text-truncate body-1" fill-weight pa-0>{{item.content}}</span>
-            </v-col>
-          </v-row>
-        </v-card-text>
-
-        <v-card-actions class="pa-0">
-          <v-row cols="12" fluid>
-            <v-col cols="3" class="d-flex flex-row pt-0 ma-0 pb-0">
-              <v-avatar class="body-2" size="30">
-                <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-              </v-avatar>
-              <strong class="ml-1">{{item.author}}</strong>
-            </v-col>
-            <v-col class="d-flex flex-row-reverse ma-0 pa-0 pr-4" cols="9">
-              <v-icon class="mr-1">mdi-heart</v-icon>
-              <span class="subheading mr-2">{{item.like}}</span>
-              <span class="mr-2"></span>
-              <v-icon class="mr-1">mdi-share-variant</v-icon>
-              <span class="subheading">{{item.share}}</span>
-            </v-col>
-          </v-row>
-        </v-card-actions>
-      </v-card>-->
     </template>
   </v-app>
 </template>

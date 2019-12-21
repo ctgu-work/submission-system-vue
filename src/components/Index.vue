@@ -1,62 +1,6 @@
 <template>
   <v-app id="inspire">
-    <!-- 侧边栏 -->
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-      <v-list dense>
-        <template v-for="item in tablist">
-          <!-- 将侧边栏分为三类
-          1. 有heading
-          2. 有children
-          3. 其他
-          -->
-          <!-- 有heading -->
-          <v-row v-if="item.heading" :key="item.heading" align="center">
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
-            </v-col>
-            <v-col cols="6" class="text-center">
-              <a href="#!" class="body-2 black--text">EDIT</a>
-            </v-col>
-          </v-row>
-
-          <!-- 有children -->
-          <v-list-group
-            v-else-if="item.children"
-            :key="item.text"
-            v-model="item.model"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon
-          >
-            <template v-slot:activator>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>{{ item.text }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-            <!-- 二级菜单 -->
-            <v-list-item v-for="(child, i) in item.children" :key="i" link>
-              <v-list-item-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>{{ child.text }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-
-          <!-- 其他 -->
-          <v-list-item v-else :key="item.text" link>
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
+    
 
     <!-- 导航栏 -->
     <Nav/>
@@ -196,8 +140,6 @@ export default {
   },
   data: () => ({
     dialog: false,
-    // drawer: null,
-    tablist: [],
     tags: [
       "测试",
       "JavaWeb",
@@ -214,47 +156,15 @@ export default {
     hotArticleList: []
   }),
   computed: {
-    drawer: {
-      get() {
-        return this.$store.state.drawer;
-      },
-      set(value) {
-        this.$store.commit("updateDrawer", value);
-      }
-    }
   },
   created() {
-    this.getTab();
     this.getHotArticleList();
   },
   methods: {
-    getTab() {
-      fetchTab(this.list).then(res => {
-        console.log(res);
-        this.tablist = res.list;
-      });
-    },
-
     getHotArticleList() {
       fetchHotArticleList(this.hotArticleList).then(res => {
-        console.log("获取最热文章列表");
         this.hotArticleList = res.list;
       });
-    }
-  },
-  watch: {
-    tablist: {
-      handler(val, oldVal) {
-        console.log("b.tablist: " + val + "---" + oldVal); //但是这两个值打印出来却都是一样的
-        console.log(this.$route.path);
-        if (this.$route.path == "/") {
-          console.log(
-            "加载第一个组件，请求地址应该是: " + this.tablist[0].site
-          );
-          this.$router.replace("/articlelist");
-        }
-      },
-      deep: true
     }
   }
 };

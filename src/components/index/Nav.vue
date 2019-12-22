@@ -181,10 +181,6 @@
     </v-dialog>
   </div>
 </template>
-      
-    </v-dialog>
-  </div>
-</template>
 <script>
 import { fetchTab } from "@/api/index";
 import { fetchHotArticleList } from "@/api/index";

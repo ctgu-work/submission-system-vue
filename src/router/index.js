@@ -18,6 +18,11 @@ import Authen from '../components/profile/Authen.vue'
 import AuthenName from '../components/profile/AuthenName.vue'
 import AuthenIdentify from '../components/profile/AuthenIdentify.vue'
 import Authening from '../components/profile/Authening.vue'
+//components/specialist/
+import Specialist from '../components/Specialist.vue'
+import SpecialistIndex from '../components/specialist/Index.vue'
+import Check from '../components/specialist/Check.vue'
+
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -97,6 +102,21 @@ const routes = [
             component: Authening
           }
         ]
+      }
+    ]
+  },
+  {
+    path:'/specialist',
+    component:Specialist,
+    redirect: 'specialist/index',
+    children:[
+      {
+        path:'index',
+        component:SpecialistIndex
+      },
+      {
+        path:'check',
+        component:Check,
       }
     ]
   }

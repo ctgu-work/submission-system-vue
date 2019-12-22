@@ -5,8 +5,8 @@
         <v-avatar size="150" tile class="avatar ma-5">
           <v-img class="avatar" :src="url"></v-img>
         </v-avatar>
-        <v-container>
-          <v-file-input v-model="form.avatar" label="修改头像"></v-file-input>
+        <v-container >
+          <v-file-input  v-model="form.avatar" label="修改头像"></v-file-input>
         </v-container>
       </v-col>
       <v-col md="9">
@@ -15,7 +15,7 @@
             <!-- <v-form ref="form" v-model="valid" lazy-validation> -->
             <v-card-actions class="display-1 ma-3">
               <!-- :rules="nameRules" -->
-              <v-text-field v-model="form.nickname" :counter="15" label="昵称" required></v-text-field>
+              <v-text-field v-model="form.nickName" :counter="15" label="昵称" required></v-text-field>
             </v-card-actions>
             <v-card-actions class="ma-3">
               <v-text-field v-model="form.name" label="真实姓名" required></v-text-field>
@@ -33,14 +33,14 @@
               <v-select v-model="form.age" :items="ageItem" label="年龄"></v-select>
             </v-card-actions>
             <v-card-actions class="ma-5">
-              <v-text-field v-model="form.signature" label="一句话介绍你自己"></v-text-field>
+              <v-text-field v-model="form.description" label="一句话介绍你自己"></v-text-field>
             </v-card-actions>
             <v-card-actions class="ma-5">
-              <v-text-field v-model="form.idcard" label="身份证号"></v-text-field>
+              <v-text-field v-model="form.idCard" label="身份证号"></v-text-field>
             </v-card-actions>
             <v-card-actions class="ma-5">
               <!-- :rules="phoneRules" -->
-              <v-text-field v-model="form.phonenumber" label="手机号" required></v-text-field>
+              <v-text-field v-model="form.phoneNumber" label="手机号" required></v-text-field>
             </v-card-actions>
             <v-card-actions class="ma-5">
               <v-text-field v-model="form.bankcard" label="银行卡号" />
@@ -60,6 +60,7 @@
 */
 import { editUserInfo } from "@/api/profile";
 import Nav from "@/components/index/Nav";
+import { read } from 'fs';
 export default {
   components: {
     Nav
@@ -67,14 +68,14 @@ export default {
   data: () => ({
     form: {
       avatar: null,
-      nickname: "chase",
-      collect: "123",
+      nickName: "chase",
+      // collect: "123",
       name: "吴彦祖",
       sex: 1,
       age: null,
-      signature: "那些路上的脚印，永远不会被隐藏",
-      idcard: "421102199907025213",
-      phonenumber: "13409676651",
+      description: "那些路上的脚印，永远不会被隐藏",
+      idCard: "421102199907025213",
+      phoneNumber: "13409676651",
       bankcard: "12312312432"
     },
     url: "https://cdn.vuetifyjs.com/images/cards/server-room.jpg",
@@ -180,12 +181,19 @@ export default {
       97,
       98,
       99
-    ],
+    ]
   }),
   methods: {
     editInfo() {
-      editUserInfo(this.form)
+      editUserInfo(this.form).then(res=>{
+        console.log(res)
+      });
       console.log(this.form);
+    },
+    changeImg(e){
+      // this.form.avatar = this.$refs.myfile.files[0]
+      //  this.form.avatar = new FormData()
+      //  this.form.avatar.append('file',e.file)
     }
   }
 };

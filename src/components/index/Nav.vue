@@ -25,12 +25,14 @@
         </template>
         <span>消息</span>
       </v-tooltip>
+      <div class="pr-4"></div>
       <v-menu v-if="user!=null" offset-y>
         <template v-slot:activator="{ on }">
           <v-btn icon large v-on="on">
             <v-avatar size="32px" item>
-              <!-- <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" /> -->
-              <v-img :src="`${publicPath}img/xixixi.jpg`" alt="Vuetify" />
+              <v-img v-if="user.avatarUrl!=null" :src="user.avatarUrl" alt="Vuetify" />
+              <v-img v-else src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
+              <!-- <v-img :src="`${publicPath}img/xixixi.jpg`" alt="Vuetify" /> -->
             </v-avatar>
           </v-btn>
         </template>
@@ -108,41 +110,78 @@
 
     <!-- 登录表单 -->
     <v-dialog v-model="dialog" width="800px">
-      <v-card>
-        <v-card-title class="grey darken-2">登录</v-card-title>
-        <v-container>
-          <v-row class="mx-2">
-            <v-col class="align-center justify-space-between" cols="12">
-              <v-row align="center" class="mr-0">
-                <v-avatar size="40px" class="mx-3">
-                  <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt />
-                </v-avatar>
-              </v-row>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="userForm.phoneNumber"
-                type="tel"
-                prepend-icon="phone"
-                placeholder="手机号"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="userForm.password"
-                type="password"
-                prepend-icon="lock"
-                placeholder="密码"
-              />
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn text color="primary" @click="dialog = false">取消</v-btn>
-          <v-btn text @click="userLogin">提交</v-btn>
-        </v-card-actions>
-      </v-card>
+      <template>
+        <v-card>
+          <v-toolbar flat color="primary" dark>
+            <v-toolbar-title>登录/注册</v-toolbar-title>
+          </v-toolbar>
+          <v-tabs vertical>
+            <v-tab>
+              <v-icon left>mdi-account</v-icon>用户登录
+            </v-tab>
+            <v-tab>
+              <v-icon left>mdi-lock</v-icon>用户注册
+            </v-tab>
+            <v-tab>
+              <v-icon left>mdi-access-point</v-icon>专家登录
+            </v-tab>
+
+            <!-- 用户登录 -->
+            <v-tab-item>
+              <v-card flat>
+                <v-container>
+                  <v-row class="mx-2">
+                    <v-col class="align-center justify-space-between" cols="12">
+                      <v-row align="center" class="mr-0">
+                        <v-avatar size="40px" class="mx-3">
+                          <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt />
+                        </v-avatar>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="userForm.phoneNumber"
+                        type="tel"
+                        prepend-icon="phone"
+                        placeholder="手机号"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="userForm.password"
+                        type="password"
+                        prepend-icon="lock"
+                        placeholder="密码"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn text color="primary" @click="dialog = false">取消</v-btn>
+                  <v-btn text @click="userLogin">提交</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-tab-item>
+            <!-- 用户注册 -->
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>用户注册</v-card-text>
+              </v-card>
+            </v-tab-item>
+            <!-- 专家登录 -->
+            <v-tab-item>
+              <v-card flat>
+                <v-card-text>专家登录</v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs>
+        </v-card>
+      </template>
+    </v-dialog>
+  </div>
+</template>
+      
     </v-dialog>
   </div>
 </template>
@@ -170,8 +209,8 @@ export default {
   }),
   created() {
     this.getTab();
-    getUserinfo().then(res=>{
-      this.user = res.result
+    getUserinfo().then(res => {
+      this.user = res.result;
     });
   },
   methods: {
@@ -189,7 +228,7 @@ export default {
         this.user = res.result;
         this.$store.dispatch("tologin", res);
       });
-    },
+    }
   }
 };
 </script>

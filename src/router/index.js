@@ -6,6 +6,7 @@ import Profile from '../components/Profile.vue'
 // components/item/
 import ArticleList from '../components/item/ArticleList.vue'
 import Article from '../components/item/Article.vue'
+import Editor from '../components/item/Editor.vue'
 //components/profile/
 import Activities from '../components/profile/Activities.vue'
 import ActivitiesContext from '../components/profile/ActivitiesContext.vue'
@@ -34,6 +35,10 @@ const routes = [
       {
         path: '/article',
         component: Article//详细文章
+      },
+      {
+        path:'/editor',
+        component: Editor
       }
     ]
   },

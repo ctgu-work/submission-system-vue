@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+//前台
 // components/
 import Index from '../components/Index.vue'
 import Profile from '../components/Profile.vue'
@@ -22,6 +23,20 @@ import Authening from '../components/profile/Authening.vue'
 import Specialist from '../components/Specialist.vue'
 import SpecialistIndex from '../components/specialist/Index.vue'
 import Check from '../components/specialist/Check.vue'
+//后台
+//components/manage/
+import ManageIndex from '../components/manage/Index.vue'
+import Admin from '../components/manage/Admin.vue'
+import AdminIndex from '../components/manage/item/Index.vue'
+import ManageUser from '../components/manage/item/User.vue'
+import ManageArticle from '../components/manage/item/Article.vue'
+import ManageTag from '../components/manage/item/Tag.vue'
+import ManageCategory from '../components/manage/item/Category.vue'
+import ManageSpecialist from '../components/manage/item/Specialist.vue'
+import ManageCheck from '../components/manage/item/SpecialistCheck.vue'
+import ManageMessage from '../components/manage/item/Message.vue'
+import ManageInvoice from '../components/manage/item/Invoice.vue'
+import ManageAdmin from '../components/manage/item/Admin.vue'
 
 import store from '../store'
 
@@ -42,7 +57,7 @@ const routes = [
         component: Article//详细文章
       },
       {
-        path:'/editor',
+        path: '/editor',
         component: Editor
       }
     ]
@@ -106,17 +121,68 @@ const routes = [
     ]
   },
   {
-    path:'/specialist',
-    component:Specialist,
+    path: '/specialist',
+    component: Specialist,
     redirect: 'specialist/index',
-    children:[
+    children: [
       {
-        path:'index',
-        component:SpecialistIndex
+        path: 'index',
+        component: SpecialistIndex
       },
       {
-        path:'check',
-        component:Check,
+        path: 'check',
+        component: Check,
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: Admin
+  },
+  {
+    path: '/manage',
+    component: ManageIndex,
+    redirect: 'manage/index',
+    children: [
+      {
+        path: 'index',
+        component: AdminIndex
+      },
+      {
+        path: 'user',
+        component: ManageUser
+      },
+      {
+        path: 'article',
+        component: ManageArticle
+      },
+      {
+        path: 'tag',
+        component: ManageTag
+      },
+      {
+        path: 'category',
+        component: ManageCategory
+      },
+      {
+        path: 'specialist',
+        component: ManageSpecialist
+      },
+      {
+        path: 'check',
+        component: ManageCheck
+      },
+      {
+        path: 'message',
+        component: ManageMessage
+      },
+      {
+        path: 'invoice',
+        component: ManageInvoice
+      },
+      {
+        path: 'admin',
+        component: ManageAdmin
       }
     ]
   }

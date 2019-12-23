@@ -102,7 +102,7 @@ export default {
       form: {
         editorContent: "",
         title: "",
-        classfity: "",
+        category: "",
         tag: [],
         author: ""
       },

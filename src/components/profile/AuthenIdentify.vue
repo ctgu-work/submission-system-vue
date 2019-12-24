@@ -1,6 +1,7 @@
 <template>
-  <v-app>
-    <form class="form fill-height">
+    <div>
+      <v-container>
+        <form class="form fill-height">
       <!-- 
       :error-messages="errors.collect('select')"
       v-validate="'required'"-->
@@ -26,7 +27,8 @@
       ></v-checkbox>
       <v-btn class="mr-4" @click="submit">submit</v-btn>
     </form>
-  </v-app>
+      </v-container>
+    </div>
 </template>
 <script>
 export default {

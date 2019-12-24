@@ -5,29 +5,32 @@
         <v-avatar size="150" tile class="avatar ma-5">
           <v-img class="avatar" :src="url"></v-img>
         </v-avatar>
-        <v-container >
-          <v-file-input  v-model="form.avatar" label="修改头像"></v-file-input>
+        <v-container id="upimg">
+          <!-- <v-file-input @change="changeImg" label="修改头像"></v-file-input> -->
+          <input
+            name="avatar"
+            type="file"
+            accept="image/*"
+            multiple
+            @change="getFile($event)"
+            class="image_file"
+          />
         </v-container>
       </v-col>
       <v-col md="9">
         <v-card class="mx-auto">
           <v-form ref="form" lazy-validation>
-            <!-- <v-form ref="form" v-model="valid" lazy-validation> -->
             <v-card-actions class="display-1 ma-3">
-              <!-- :rules="nameRules" -->
               <v-text-field v-model="form.nickName" :counter="15" label="昵称" required></v-text-field>
             </v-card-actions>
             <v-card-actions class="ma-3">
               <v-text-field v-model="form.name" label="真实姓名" required></v-text-field>
             </v-card-actions>
             <v-card-actions class="ma-3">
-              <v-select
-                v-model="form.sex"
-                :items="sexItem"
-                :rules="[v => !!v || 'Item is required']"
-                label="性别"
-                required
-              ></v-select>
+              <v-radio-group row prepend-icon="mdi-face" v-model="form.sex" :mandatory="false">
+                <v-radio label="男" value="0"></v-radio>
+                <v-radio label="女" value="1"></v-radio>
+              </v-radio-group>
             </v-card-actions>
             <v-card-actions class="ma-5">
               <v-select v-model="form.age" :items="ageItem" label="年龄"></v-select>
@@ -60,25 +63,29 @@
 */
 import { editUserInfo } from "@/api/profile";
 import Nav from "@/components/index/Nav";
-import { read } from 'fs';
+import { read } from "fs";
+import { getUserinfo } from "@/api/index";
 export default {
   components: {
     Nav
   },
   data: () => ({
+    user: "",
+    avatar: "",
     form: {
-      avatar: null,
-      nickName: "chase",
+      avatar: "",
+      nickName: "",
       // collect: "123",
-      name: "吴彦祖",
-      sex: 1,
-      age: null,
-      description: "那些路上的脚印，永远不会被隐藏",
-      idCard: "421102199907025213",
-      phoneNumber: "13409676651",
-      bankcard: "12312312432"
+      name: "",
+      sex: "",
+      age: "",
+      description: "",
+      idCard: "",
+      phoneNumber: "",
+      bankcard: ""
     },
-    url: "https://cdn.vuetifyjs.com/images/cards/server-room.jpg",
+    url:
+      "https://ctguqmx-bbs-img.oss-cn-beijing.aliyuncs.com/images/submit/bd08156570ae52e0f4ff1cd6e6b51a2a.jpg",
     sexItem: ["男", "女"],
     checkbox: "1",
     ageItem: [
@@ -184,17 +191,42 @@ export default {
     ]
   }),
   methods: {
-    editInfo() {
-      editUserInfo(this.form).then(res=>{
-        console.log(res)
-      });
-      console.log(this.form);
+    getFile() {
+      this.avatar = event.target.files[0];
+      console.log(this.avatar);
     },
-    changeImg(e){
-      // this.form.avatar = this.$refs.myfile.files[0]
-      //  this.form.avatar = new FormData()
-      //  this.form.avatar.append('file',e.file)
+    editInfo() {
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append("avatar", this.avatar);
+      editUserInfo(formData).then(res => {
+        console.log(res);
+      });
+    },
+    changeImg() {
+      let that = this;
+      let file = event.target.files[0];
+
+      that.uploadImgName = file.name;
+
+      let param = new FormData(); // 创建form对象
+      param.append("avatar", file, file.name); // 通过append向form对象添加数据
+      // param.append("order_no", that.order.order_no); // 添加form表单中其他数据
+      console.log(param.get("file")); // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+
+      editUserInfo(param.get("file")).then(res => {
+        console.log(res);
+      });
+      // let upimg = document.getElementById("upimg")
+      // this.form = new FormData()
+      // form.append('avatar',)
     }
+  },
+  created() {
+    getUserinfo().then(res => {
+      console.log(res.result);
+      this.form = res.result;
+    });
   }
 };
 </script>

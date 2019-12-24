@@ -1,5 +1,7 @@
 <template>
-    <v-app>
-        正在审核
-    </v-app>
+        <div>
+            <v-container>
+                正在审核...
+            </v-container>
+        </div>
 </template>

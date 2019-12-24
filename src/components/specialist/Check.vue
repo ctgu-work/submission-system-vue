@@ -1,8 +1,6 @@
 <template>
   <v-app>
-      <v-alert v-model="alert" dismissible type="warning">
-      你的审核会直接影响他人的劳动成果，请认真审核!
-    </v-alert>
+    <v-alert v-model="alert" dismissible type="warning">你的审核会直接影响他人的劳动成果，请认真审核!</v-alert>
     <div class="d-flex align-start">
       <v-avatar class size="120">
         <img :src="avatar" :alt="nickname" />
@@ -11,7 +9,7 @@
         <p class="headline">{{nickname}}</p>
         <p class="body-1">
           <v-icon v-text="`fas fa-envelope`"></v-icon>
-           {{email}}
+          {{email}}
         </p>
       </div>
     </div>
@@ -31,19 +29,21 @@
   </v-app>
 </template>
 <script>
-import { submitComment } from "@/api/specialist";
+import { submitComment, getInfo } from "@/api/specialist";
 export default {
   data: () => ({
-      alert:true,
+    alert: true,
     avatar: "https://cdn.vuetifyjs.com/images/john.jpg",
     nickname: "chase",
     email: "imsunchao@gmail.com",
     like: 20,
     content: "<h1>123</h1><p>123</p><p>123</p>",
     time: "2019-12-01",
-    id: "",
+    paperId: "",
     column: null,
-
+    info: {
+      paperId: ""
+    },
     form: {
       row: "2",
       text: "",
@@ -56,12 +56,17 @@ export default {
       submitComment(this.form).then(res => {
         console.log(res);
       });
+    },
+    getPaperInfo() {
+      this.info.paperId = this.$route.query.id;
+      getInfo(this.info).then(res=>{
+        this.nickname=res.result.author
+        this.content = res.result.content
+      });
     }
   },
   created() {
-    this.id = this.$route.query.id;
-    this.form.id = this.id;
-    console.log("query" + this.$route.query.id);
+    this.getPaperInfo()
   }
 };
 </script>

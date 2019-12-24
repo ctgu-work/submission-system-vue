@@ -30,7 +30,7 @@
         <template v-slot:activator="{ on }">
           <v-btn icon large v-on="on">
             <v-avatar size="32px" item>
-              <v-img v-if="user.avatarUrl!=null" :src="user.avatarUrl" alt="Vuetify" />
+              <v-img v-if="user.avatarUrl.length!=0" :src="user.avatarUrl" alt="Vuetify" />
               <v-img v-else src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
               <!-- <v-img :src="`${publicPath}img/xixixi.jpg`" alt="Vuetify" /> -->
             </v-avatar>
@@ -131,13 +131,6 @@
               <v-card flat>
                 <v-container>
                   <v-row class="mx-2">
-                    <v-col class="align-center justify-space-between" cols="12">
-                      <v-row align="center" class="mr-0">
-                        <v-avatar size="40px" class="mx-3">
-                          <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt />
-                        </v-avatar>
-                      </v-row>
-                    </v-col>
                     <v-col cols="12">
                       <v-text-field
                         v-model="userForm.phoneNumber"
@@ -158,21 +151,132 @@
                 </v-container>
                 <v-card-actions>
                   <v-spacer />
-                  <v-btn text color="primary" @click="dialog = false">取消</v-btn>
                   <v-btn text @click="userLogin">提交</v-btn>
+                  <v-btn text color="primary" @click="dialog = false">取消</v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
             <!-- 用户注册 -->
             <v-tab-item>
               <v-card flat>
-                <v-card-text>用户注册</v-card-text>
+                <v-container>
+                  <v-row class="mx-2">
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.name"
+                        type="tel"
+                        prepend-icon="mdi-account"
+                        placeholder="姓名"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.nickName"
+                        type="tel"
+                        prepend-icon="phone"
+                        placeholder="昵称"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.idCard"
+                        type="tel"
+                        prepend-icon="mdi-account-badge-horizontal"
+                        placeholder="身份证号"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-radio-group
+                        row
+                        prepend-icon="mdi-face"
+                        v-model="registerForm.sex"
+                        :mandatory="false"
+                      >
+                        <v-radio label="男" value="1"></v-radio>
+                        <v-radio label="女" value="2"></v-radio>
+                      </v-radio-group>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.phoneNumber"
+                        type="tel"
+                        prepend-icon="phone"
+                        placeholder="手机号"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.age"
+                        prepend-icon="mdi-cake"
+                        placeholder="年龄"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.password"
+                        type="password"
+                        prepend-icon="lock"
+                        placeholder="密码"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="registerForm.email"
+                        type="email"
+                        prepend-icon="email"
+                        placeholder="邮箱"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-row>
+                        <v-col cols="6">
+                          <v-text-field
+                            v-model="registerForm.verify"
+                            type="email"
+                            prepend-icon="email"
+                            placeholder="验证码"
+                          />
+                        </v-col>
+                        <v-col cols="6">
+                          <v-btn @click="submitVerify" class="mr-2">提交</v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-btn @click="submitRegister" class="mr-2">提交</v-btn>
+                      <v-btn @click="dialog=!dialog">取消</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
               </v-card>
             </v-tab-item>
             <!-- 专家登录 -->
             <v-tab-item>
               <v-card flat>
-                <v-card-text>专家登录</v-card-text>
+                <v-container>
+                  <v-row class="mx-2">
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="specialistForm.phoneNumber"
+                        type="tel"
+                        prepend-icon="phone"
+                        placeholder="手机号"
+                      />
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="specialistForm.password"
+                        type="password"
+                        prepend-icon="lock"
+                        placeholder="密码"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <v-container>
+                  <v-btn @click="spLogin" class="mr-2">登录</v-btn>
+                  <v-btn @click="dialog=!dialog">取消</v-btn>
+                </v-container>
               </v-card>
             </v-tab-item>
           </v-tabs>
@@ -184,7 +288,13 @@
 <script>
 import { fetchTab } from "@/api/index";
 import { fetchHotArticleList } from "@/api/index";
-import { login } from "@/api/index";
+import {
+  login,
+  register,
+  getVerifyCode,
+  specialistLogin,
+  logout
+} from "@/api/index";
 import { getUserinfo } from "@/api/index";
 export default {
   data: () => ({
@@ -195,13 +305,30 @@ export default {
     avatarList: [
       { title: "个人主页", url: "/profile" },
       { title: "写文章", url: "/" },
-      { title: "修改信息", url: "/profile/activities/editinfo" }
+      { title: "修改信息", url: "/profile/activities/editinfo" },
+      { title: "成为专家", url: "/profile/authen" },
+      { title: "退出登录", url: "logout" }
     ],
     userForm: {
       phoneNumber: "",
       password: ""
     },
-    user: null
+    registerForm: {
+      name: "",
+      nickName: "",
+      idCard: "",
+      sex: 1,
+      phoneNumber: "",
+      password: "",
+      email: "",
+      verify: "",
+      age: ""
+    },
+    user: null,
+    specialistForm: {
+      phoneNumber: "",
+      password: ""
+    }
   }),
   created() {
     this.getTab();
@@ -217,12 +344,38 @@ export default {
     },
     clickAvatar(data) {
       console.log(data);
-      this.$router.push(data);
+      if (data === "logout") {
+        
+        logout()
+        // this.$router.push("/");
+      } else {
+        this.$router.push(data);
+      }
     },
     userLogin() {
       login(this.userForm).then(res => {
-        this.user = res.result;
-        this.$store.dispatch("tologin", res);
+        if (res.msg === "success") {
+          this.user = res.result;
+          this.$store.dispatch("tologin", res);
+          this.dialog = false;
+        } else {
+          console.log("登录失败");
+        }
+      });
+    },
+    submitRegister() {
+      register(this.registerForm).then(res => {
+        console.log(res);
+      });
+    },
+    submitVerify() {
+      getVerifyCode(this.registerForm).then(res => {
+        this.registerForm.verify = res.verify;
+      });
+    },
+    spLogin() {
+      specialistLogin(this.specialistForm).then(res => {
+        console.log(res);
       });
     }
   }

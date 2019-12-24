@@ -82,8 +82,12 @@ const routes = [
                 component: Info//个人主页
               }, {
                 path: 'state',
-                component: State//稿件状态
-              }
+                component: State,//稿件状态
+                meta: {
+                  requiresAuth: true
+                }
+              },
+              
             ]
           }, {
             path: 'editinfo',
@@ -102,6 +106,9 @@ const routes = [
       {
         path: 'authen',
         component: Authen,
+        meta: {
+          requiresAuth: true
+        },
         redirect: 'authen/name',
         children: [
           {
@@ -123,6 +130,9 @@ const routes = [
   {
     path: '/specialist',
     component: Specialist,
+    meta: {
+      requiresAuth: true
+    },
     redirect: 'specialist/index',
     children: [
       {
@@ -137,16 +147,25 @@ const routes = [
   },
   {
     path: '/admin',
-    component: Admin
+    component: Admin,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/manage',
     component: ManageIndex,
+    meta: {
+      requiresAuth: true
+    },
     redirect: 'manage/index',
     children: [
       {
         path: 'index',
-        component: AdminIndex
+        component: AdminIndex,
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: 'user',
@@ -202,6 +221,7 @@ router.beforeEach((to, from, next) => {
       console.log('token: ' + token)
     } else {
       console.log('需要权限，你没有token')
+      // next('/')
     }
   } else {
     console.log('不要权限')
